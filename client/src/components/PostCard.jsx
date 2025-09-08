@@ -9,18 +9,11 @@ const PostCard = ({ post }) => {
     const postWithHashTags = post.content ? post.content.replace(/(#\w+)/g, '<span class="text-indigo-600">$1</span>') : '';
     
     // Khởi tạo `likes` với mảng rỗng nếu `post.like_count` không phải là mảng hoặc undefined
-    const [likes, setLikes] = useState(post.like_count || []); // Sửa setLieks thành setLikes và thêm || []
+    const [likes, setLikes] = useState(post.like_count || []); 
     
-    const currentUser = dummyUserData; // Giả sử dummyUserData có cấu trúc user object với _id
+    const currentUser = dummyUserData; 
 
     const handleLike = async () => {
-        // Logic xử lý like ở đây
-        // Ví dụ:
-        // if (likes.includes(currentUser._id)) {
-        //     setLikes(likes.filter(id => id !== currentUser._id));
-        // } else {
-        //     setLikes([...likes, currentUser._id]);
-        // }
     }
     const navigate = useNavigate()
     return (
