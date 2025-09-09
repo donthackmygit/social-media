@@ -10,6 +10,7 @@
 import ImageKit from "imagekit";
 
 const getImageKitInstance = () => {
+  // Logic khởi tạo và kiểm tra biến môi trường
   if (!process.env.IMAGEKIT_PUBLIC_KEY) {
     throw new Error('Missing IMAGEKIT_PUBLIC_KEY environment variable.');
   }
@@ -20,5 +21,6 @@ const getImageKitInstance = () => {
   });
 };
 
-const imageKit = getImageKitInstance();
-export default imageKit;
+// Xuất trực tiếp hàm, không phải kết quả của hàm.
+// Điều này đảm bảo code bên trong hàm chỉ chạy khi được gọi.
+export default getImageKitInstance;
