@@ -6,6 +6,9 @@ import {inngest, functions} from './inngest/index.js'
 import {serve} from 'inngest/express'
 import { clerkMiddleware } from '@clerk/express'
 import userRouter from './routes/userRoutes.js';
+console.log('IMAGEKIT_PUBLIC_KEY:', process.env.IMAGEKIT_PUBLIC_KEY);
+console.log('IMAGEKIT_PRIVATE_KEY:', process.env.IMAGEKIT_PRIVATE_KEY);
+console.log('IMAGEKIT_URL_ENDPOINT:', process.env.IMAGEKIT_URL_ENDPOINT);
 const app = express();
 
 await connectDB();
