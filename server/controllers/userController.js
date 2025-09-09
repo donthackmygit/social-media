@@ -10,7 +10,6 @@ export const getUserData = async (req, res) => {
         if (!user) {
             return res.status(404).json({ success: false, message: 'User not found' });
         }
-        // Bạn đã quên trả về dữ liệu người dùng ở đây
         res.json({ success: true, user });
     } catch (error) {
         console.log(error);
