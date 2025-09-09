@@ -1,6 +1,6 @@
 import User from "../models/User.js";
 import fs from 'fs';
-import imagekit from '../configs/imageKit.js';
+import imageKit from '../configs/imageKit.js';
 import Connection from '../models/Connection.js';
 
 export const getUserData = async (req, res) => {
@@ -55,12 +55,12 @@ export const updateUserData = async (req, res) => {
 
         if (profile) {
             const buffer = fs.readFileSync(profile.path);
-            const response = await imagekit.upload({
+            const response = await imageKit.upload({
                 file: buffer,
                 fileName: profile.originalname
             });
 
-            const url = imagekit.url({
+            const url = imageKit.url({
                 path: response.filePath,
                 transformation: [
                     { quality: 'auto' },
@@ -73,13 +73,13 @@ export const updateUserData = async (req, res) => {
 
         if (cover) {
             const buffer = fs.readFileSync(cover.path);
-            const response = await imagekit.upload({
+            const response = await imageKit.upload({
                 file: buffer,
                 // Sửa lỗi: sử dụng cover.originalname thay vì profile.originalname
                 fileName: cover.originalname
             });
 
-            const url = imagekit.url({
+            const url = imageKit.url({
                 path: response.filePath,
                 transformation: [
                     { quality: 'auto' },
