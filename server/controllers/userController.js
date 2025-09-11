@@ -2,7 +2,8 @@ import User from "../models/User.js";
 import fs from 'fs';
 import imageKit from '../configs/imageKit.js';
 import Connection from '../models/Connection.js';
-
+import Post from "../models/Post.js";
+import {inngest} from '../inngest/index.js'
 export const getUserData = async (req, res) => {
     try {
         const { userId } = req.auth();
@@ -179,18 +180,21 @@ export const sendConnectionRequest = async (req, res) => {
         });
 
         if (!connection) {
-            await Connection.create({
+            const newConnection = await Connection.create({
                 from_user_id: userId,
                 to_user_id: id
-            });
+            })
+
+            await inngest.send({
+                name: 'app/connection-request',
+                data: {connectionId: newConnection._id}
+            })
             return res.json({ success: true, message: 'Connection request sent successfully' });
         } else if (connection.status === 'accepted') {
-            // Sửa lỗi: Thông báo không chính xác
-            return res.status(400).json({ success: false, message: 'You are already connected' });
-        } else if (connection.status === 'pending') {
-            return res.status(400).json({ success: false, message: 'Connection request already pending' });
-        }
+            return res.json({ success: false, message: 'You are already connected' });
+        } 
 
+        return res.json({ success: false, message: 'Connection request pending' });
     } catch (error) {
         console.log(error);
         res.status(500).json({ success: false, message: error.message });
@@ -242,3 +246,19 @@ export const getUserConnections = async (req, res) => {
         res.status(500).json({ success: false, message: error.message });
     }
 };
+
+//Get User Profiles
+export const getUserProfiles = async (req, res) => {
+    try {
+        const {profileId} = req.body;
+        const profile = await User.findById(profileId)
+        if(!profile){
+            return res.json({success: false, message: 'Profile not found'})
+        }
+        const posts = await Post.find({user:profileId}).populate('user')
+        res.json({success: true, profile, posts})
+    } catch (error){
+        console.log(error);
+        res.json({success: false, message: error.message})
+    }
+}
