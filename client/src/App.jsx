@@ -17,6 +17,7 @@ import { useRef } from 'react';
 import { addMessages } from './features/messages/messagesSlice'
 import Notification from './components/Notification'
 import {fetchUser} from './features/user/userSlice.js'
+import toast from 'react-hot-toast'
 const App = () => {
   const {user} = useUser()
   const {getToken} = useAuth()

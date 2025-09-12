@@ -1,7 +1,6 @@
 import React,{useState} from "react";
 import Sidebar from "../components/Sidebar";
 import { Outlet } from "react-router-dom";
-import { dummyUserData } from "../assets/assets";
 import Loading from "../components/Loading";
 import { Menu } from 'lucide-react';
 import { useSelector } from "react-redux";
