@@ -132,7 +132,10 @@ const deleteStory = inngest.createFunction(
 
 const sendNotificationOfUnseenMessages = inngest.createFunction(
     {id: 'send-unseen-messages-notification'},
-    {cron: 'TZ-America/New_York 0 9 * * *'}, //every day 9 am
+    {
+        cron: '0 9 * * *',
+        timezone: 'Asia/Ho_Chi_Minh' 
+    }, //every day 9 am
     async ({step}) => {
         const messages = await Message.find({seen: false}).populate('to_user_id');
         const unseenCount = {}
@@ -145,11 +148,11 @@ const sendNotificationOfUnseenMessages = inngest.createFunction(
             const user = await User.findById(userId);
 
             const subject = `Your have ${unseenCount[userId]} unseen messages`;
-
+            
             const body = `
                 <div style="font-family: Arial, sans-serif; padding: 20px">
-                    <h2>Hi ${connection.to_user_id.full_name},</h2>
-                    <p>You have a new connection request from ${connection.from_user_id.full_name} - @${connection.from_user_id.username}</p>
+                    <h2>Hi ${user.full_name},</h2>
+                    <p>You have ${unseenCount[userId]} unseen messages</p>
                     <p>Click <a href="${process.env.FRONTEND_URL}/connections" style="color: #10b981">here</a> to accept or reject the request</p>
                     <br/>
                     <p>Thanks,<br/>Social Media - Stay Connected</p>

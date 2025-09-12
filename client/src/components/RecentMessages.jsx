@@ -37,7 +37,7 @@ const RecentMessages = () => {
     useEffect(()=>{
         if(user){
             fetchRecentMessages();
-            setInterval(fetchRecentMessages, 3000)
+            setInterval(fetchRecentMessages, 30000)
             return () => {clearInterval()}
         }
     },[user]);
