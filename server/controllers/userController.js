@@ -170,8 +170,6 @@ export const sendConnectionRequest = async (req, res) => {
         if (connectionRequests.length >= 20) {
             return res.status(429).json({ success: false, message: 'You have sent more than 20 connection requests in the last 24 hours' });
         }
-        
-        // Sửa lỗi: findOnd -> findOne
         const connection = await Connection.findOne({
             $or: [
                 { from_user_id: userId, to_user_id: id },
