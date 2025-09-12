@@ -204,9 +204,7 @@ export const sendConnectionRequest = async (req, res) => {
 export const acceptConnectionRequest = async (req, res) => {
     try {
         const { userId } = req.auth(); // người nhận request
-        const { id } = req.body; // người gửi request
-
-        // Sửa lỗi: findOnd -> findOne
+        const { id } = req.body; 
         const connection = await Connection.findOne({ from_user_id: id, to_user_id: userId, status: 'pending' });
 
         if (!connection) {
